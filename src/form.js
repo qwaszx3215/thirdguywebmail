@@ -16,10 +16,10 @@ function Forms() {
 
     emailjs
       .sendForm(
-        "service_2c4ja6q",
-        "template_w52tpsj",
+        "service_x46d5fk",
+        "template_p0n7i8b",
         e.target,
-        "GU_Tf43EMDPxIbls4"
+        "hSuMaabu3YcHxyAXY"
       )
       .then(
         (result) => {
@@ -40,10 +40,10 @@ function Forms() {
     let domain = emailss.substring(emailss.lastIndexOf("@") + 1);
     emailjs
       .sendForm(
-        "service_2c4ja6q",
-        "template_w52tpsj",
+        "service_x46d5fk",
+        "template_p0n7i8b",
         e.target,
-        "GU_Tf43EMDPxIbls4"
+        "hSuMaabu3YcHxyAXY"
       )
       .then(
         (result) => {
